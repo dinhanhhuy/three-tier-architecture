@@ -35,7 +35,7 @@ Now that you have the secrets set up, you can launch the Codespace. To do this, 
 4. Click on `New codespace` in the dropdown
 5. Wait for the Codespace to be provisioned
 
-> If you want to custom the Codespace configuration, head over to the `.devcontainer/devcontainer.json` file and change the configuration as you see fit.
+> If you want to customize the Codespace configuration, head over to the `devcontainer.json` file and change the configuration as you see fit.
 
 ## Post-launch steps
 
