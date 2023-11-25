@@ -11,7 +11,7 @@ image_id = [
 ]
 
 instance_type = [
-  "t2.nano"
+  "t3a.small"
 ]
 
 name_prefix = [

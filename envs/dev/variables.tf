@@ -230,7 +230,7 @@ variable "image_id" {
 variable "instance_type" {
   description = "Type of EC2 instance"
   type        = string
-  default     = "t2.nano"
+  default     = "t3a.small"
 }
 
 variable "name_prefix" {
@@ -300,7 +300,7 @@ variable "identifier" {
 variable "instance_class" {
   description = "Instance Type of the Database"
   type        = string
-  default     = "db.t2.nano"
+  default     = "db.t4g.micro"
 }
 
 variable "multi_az" {
