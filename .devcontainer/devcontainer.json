@@ -36,7 +36,10 @@
           "esbenp.prettier-vscode",
   
           // Markdownlint
-          "DavidAnson.vscode-markdownlint"
+          "DavidAnson.vscode-markdownlint",
+
+          // Github Copilot
+          "GitHub.copilot"
         ],
         "settings": {
           "workbench.iconTheme": "material-icon-theme",
@@ -48,7 +51,7 @@
           "terminal.integrated.defaultProfile.linux": "zsh"
         }
       }
-    },
+    }
   
     // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
     // "remoteUser": "root"
