@@ -9,7 +9,7 @@ This guide will help you set up a GitHub Codespace for this repository to enable
 
 > Please note that you will be charged for any AWS resources you provision. Please make sure to clean up any resources you provision to avoid unnecessary charges and delete credentials from AWS IAM when you are done.
 
-## Setting up the Codespace secrets
+## Setting up the Codespace secrets (Recommended)
 
 After you have AWS credentials, you need to add them to the Codespace as secrets. To do this, follow these steps:
 
@@ -25,6 +25,8 @@ After you have AWS credentials, you need to add them to the Codespace as secrets
 
 6. Click on `Add secret` to add the secret to the Codespace
 
+> You can also export those secrets as environment variables after the Codespace is provisioned, but it's not recommended as it's not secure (and even you'll need to do it every time you launch the Codespace).
+
 ## Launch the Codespace
 
 Now that you have the secrets set up, you can launch the Codespace. To do this, follow these steps:
@@ -37,8 +39,14 @@ Now that you have the secrets set up, you can launch the Codespace. To do this, 
 
 > If you want to customize the Codespace configuration, head over to the `devcontainer.json` file and change the configuration as you see fit.
 
+## Verify the Caller Identity
+
+Before you provision any infrastructure, you need to verify the caller identity. To do this, use `aws sts get-caller-identity` command in the terminal window and you'll see the caller identity information, otherwise, you'll see an error message.
+
+> For those who are interacting with AWS via VS Code extension, please select the connection profile "env:variables" to use the credentials you added as secrets.
+
 ## Post-launch steps
 
 After the Codespace is provisioned, it will automatically open a terminal window to run the `post-install.sh` script. This script will install the necessary tools to provision AWS infrastructure using Terraform. Please monitor the script output to make sure it runs successfully.
 
-> If you want to run the script again, you can run `./post-install.sh` in the terminal window and write your own script to install the tools you need.
+> If you want to run the script again, you can run `./post-install.sh` in the terminal window or feel free to write your own script to install the tools you need.
