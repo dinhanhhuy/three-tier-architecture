@@ -1,9 +1,5 @@
-provider "aws" {
-  region = var.region
-}
-
 module "vpc" {
-  source                    = "./modules/vpc"
+  source                    = "../../modules/vpc"
   project_name              = var.project_name
   environment               = var.environment
   vpc_id                    = module.vpc.vpc_id
@@ -42,7 +38,7 @@ module "vpc" {
 }
 
 module "ec2" {
-  source             = "./modules/ec2"
+  source             = "../../modules/ec2"
   project_name       = var.project_name
   environment        = var.environment
   image_id           = var.image_id
@@ -50,13 +46,14 @@ module "ec2" {
   app_security_group = module.vpc.app_security_group
   name_prefix        = var.name_prefix
   key_name           = var.key_name
+  private_key_path   = "${local.base_dir}/${var.key_name}.pem"
   connection_type    = var.connection_type
   connection_user    = var.connection_user
   connection_host    = var.connection_host
 }
 
 module "rds" {
-  source               = "./modules/rds"
+  source               = "../../modules/rds"
   project_name         = var.project_name
   environment          = var.environment
   engine_name          = var.engine_name
