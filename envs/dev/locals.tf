@@ -1,3 +1,3 @@
 locals {
-   base_dir = path.root
+  base_dir = path.root
 }

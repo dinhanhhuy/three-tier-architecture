@@ -45,6 +45,8 @@ module "ec2" {
   instance_type      = var.instance_type
   app_security_group = module.vpc.app_security_group
   name_prefix        = var.name_prefix
+  volume_type        = "gp2"
+  volume_size        = 10
   key_name           = var.key_name
   private_key_path   = "${local.base_dir}/${var.key_name}.pem"
   connection_type    = var.connection_type

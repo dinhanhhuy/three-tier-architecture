@@ -52,3 +52,17 @@ variable "connection_host" {
   description = "Allows connection to the newly created EC2 Instances"
   type = string
 }
+
+variable "volume_size" {
+  description = "Size of the EBS Volume"
+  type = number
+}
+
+variable "volume_type" {
+  description = "Type of EBS Volume"
+  type = string
+  validation {
+    condition = can(regex("gp2|gp3", var.volume_type))
+    error_message = "Volume Type must be one of gp2, gp3"
+  }
+}
