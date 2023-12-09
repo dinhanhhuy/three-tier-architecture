@@ -1,3 +1,20 @@
+module "iam" {
+  source       = "../../modules/iam"
+  project_name = var.project_name
+  environment  = var.environment
+}
+
+
+module "kms" {
+  source                              = "../../modules/kms"
+  project_name                        = var.project_name
+  environment                         = var.environment
+  ebs_kms_key_deletion_window_in_days = var.ebs_kms_key_deletion_window_in_days
+  ebs_kms_key_rotation                = var.ebs_kms_key_rotation
+  ebs_kms_key_policy                  = module.iam.ebs_kms_key_policy
+}
+
+
 module "vpc" {
   source                    = "../../modules/vpc"
   project_name              = var.project_name
@@ -34,25 +51,29 @@ module "vpc" {
   db_security_group_name    = var.db_security_group_name
   alb_security_group        = module.vpc.alb_security_group
   app_security_group        = var.app_security_group
-
 }
+
 
 module "ec2" {
-  source             = "../../modules/ec2"
-  project_name       = var.project_name
-  environment        = var.environment
-  image_id           = var.image_id
-  instance_type      = var.instance_type
-  app_security_group = module.vpc.app_security_group
-  name_prefix        = var.name_prefix
-  volume_type        = "gp2"
-  volume_size        = 10
-  key_name           = var.key_name
-  private_key_path   = "${local.base_dir}/${var.key_name}.pem"
-  connection_type    = var.connection_type
-  connection_user    = var.connection_user
-  connection_host    = var.connection_host
+  source                   = "../../modules/ec2"
+  project_name             = var.project_name
+  environment              = var.environment
+  image_id                 = var.image_id
+  user_data                = filebase64("${local.base_dir}/scripts/ec2_user_data.sh")
+  ebs_kms_key_arn          = module.kms.ebs_kms_key_arn
+  iam_instance_profile_arn = module.iam.ssm_instance_profile_arn
+  instance_type            = var.instance_type
+  app_security_group       = module.vpc.app_security_group
+  name_prefix              = var.name_prefix
+  volume_type              = var.volume_type
+  volume_size              = var.volume_size
+  key_name                 = var.key_name
+  private_key              = "${local.base_dir}/${var.key_name}.pem"
+  connection_type          = var.connection_type
+  connection_user          = var.connection_user
+  connection_host          = var.connection_host
 }
+
 
 module "rds" {
   source               = "../../modules/rds"

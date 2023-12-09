@@ -72,7 +72,7 @@ resource "aws_lb" "main" {
   load_balancer_type = var.load_balancer_type
   security_groups    = [var.alb_security_group]
   subnets            = [for value in aws_subnet.public_subnet : value.id]
-  
+
   tags = merge(local.required_tags, { Name = "Application-ALB-${title(var.environment)}" })
 }
 

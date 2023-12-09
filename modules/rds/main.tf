@@ -15,5 +15,8 @@ resource "aws_db_instance" "main" {
   vpc_security_group_ids       = [var.db_security_group]
   skip_final_snapshot          = var.database_snapshot
 
-  tags = local.required_tags
+  tags = {
+    Project = var.project_name
+    Environment = var.environment
+  }
 }

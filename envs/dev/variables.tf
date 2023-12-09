@@ -17,6 +17,22 @@ variable "environment" {
 }
 
 ################################################################################
+# KMS Module - Variables
+################################################################################
+
+variable "ebs_kms_key_deletion_window_in_days" {
+  description = "Number of days after which the key is deleted after destruction of the resource, must be between 7 and 30 days"
+  type        = number
+  default     = 30
+}
+
+variable "ebs_kms_key_rotation" {
+  description = "Whether to enable key rotation"
+  type        = bool
+  default     = true
+}
+
+################################################################################
 # VPC Module - Variables 
 ################################################################################
 
@@ -217,6 +233,12 @@ variable "app_security_group" {
   default     = "aws_security_group.app_security_group.id"
 }
 
+variable "id_app" {
+  description = "Launch Template ID"
+  type        = string
+  default     = "aws_launch_template.main.id"
+}
+
 ################################################################################
 # EC2 Module - Variables 
 ################################################################################
@@ -224,7 +246,9 @@ variable "app_security_group" {
 variable "image_id" {
   description = "Image ID"
   type        = string
-  default     = "ami-084e8c05825742534"
+
+  # Amazon Linux 2023 
+  default = "ami-0cfd0973db26b893b"
 }
 
 variable "instance_type" {
@@ -233,22 +257,28 @@ variable "instance_type" {
   default     = "t3a.small"
 }
 
+variable "volume_type" {
+  description = "Type of EBS Volume"
+  type        = string
+  default     = "gp3"
+}
+
+variable "volume_size" {
+  description = "Size of the EBS Volume"
+  type        = number
+  default     = 10
+}
+
 variable "name_prefix" {
   description = "Name of Launch Template"
   type        = string
   default     = "app-launch-template"
 }
 
-variable "id_app" {
-  description = "Launch Template ID"
-  type        = string
-  default     = "aws_launch_template.main.id"
-}
-
 variable "key_name" {
   description = "Name of the Private Key to be used for the EC2 Instance"
   type        = string
-  default     = "terraform"
+  default     = "three-tier-architecture"
 }
 
 variable "connection_type" {
